@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Modal = ({ content, onClose }) => {
+const Modal = ({ content, onClose, onAddToCart, onAddToWishlist }) => {
   if (!content) return null;
 
   return (
@@ -21,7 +21,7 @@ const Modal = ({ content, onClose }) => {
           </div>
           <div className="flex-1 flex flex-col">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">{content.name}</h2>
-            <p className="text-lg font-semibold text-orange-600 mb-2">{content.price.toLocaleString()}₫</p>
+            <p className="text-lg font-semibold text-black mb-2">{content.price.toLocaleString()}₫</p>
             <p className="text-gray-500 mb-2">Số lượng: {content.quantity}</p>
             <div className="mb-2">
               <span className="font-semibold">Mô tả:</span>
@@ -32,8 +32,8 @@ const Modal = ({ content, onClose }) => {
               <p className="text-gray-700 text-sm whitespace-pre-line">{content.shortDescription}</p>
             </div>
             <div className="flex gap-3 mt-auto">
-              <button className="flex-1 py-2 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition">Thêm vào giỏ</button>
-              <button className="flex-1 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition">Yêu thích</button>
+              <button className="flex-1 py-2 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition" onClick={() => onAddToCart(content)}>Thêm vào giỏ</button>
+              <button className="flex-1 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition" onClick={() => onAddToWishlist(content)}>Yêu thích</button>
             </div>
           </div>
         </div>
