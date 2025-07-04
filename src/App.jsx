@@ -7,6 +7,8 @@ import CartPage from './pages/CartPage';
 import Modal from './components/Modal';
 import productsData from './data/products.json';
 import WishlistPage from './pages/WishlistPage';
+import CheckoutPage from './pages/CheckoutPage';
+import SuccessPage from './pages/SuccessPage';
 
 function App() {
   const [cart, setCart] = useState(() => {
@@ -40,9 +42,11 @@ function App() {
     setStateModal(null);
   };
 
-  const handleAddToWishlist = (product) => {
+  const handleToggleWishlist = (product) => {
     setWishlist((prev) => {
-      if (prev.find((item) => item.id === product.id)) return prev;
+      if (prev.find((item) => item.id === product.id)) {
+        return prev.filter((item) => item.id !== product.id);
+      }
       return [...prev, { ...product }];
     });
     setStateModal(null);
@@ -62,12 +66,14 @@ function App() {
       {location.pathname === '/' && <Banner />}
       <div className="max-w-5xl mx-auto p-4">
         <Routes>
-          <Route path="/" element={<ProductList products={productsData} onAddToCart={handleAddToCart} setStateModal={setStateModal} onAddToWishlist={handleAddToWishlist} wishlist={wishlist} />} />
-          <Route path="/cart" element={<CartPage cart={cart} removeFromCart={handleRemoveFromCart} setCart={setCart} />} />
+          <Route path="/" element={<ProductList products={productsData} onAddToCart={handleAddToCart} setStateModal={setStateModal} onAddToWishlist={handleToggleWishlist} wishlist={wishlist} />} />
+          <Route path="/cart" element={<CartPage cart={cart} removeFromCart={handleRemoveFromCart} setCart={setCart} onAddToWishlist={handleToggleWishlist} wishlist={wishlist} />} />
           <Route path="/wishlist" element={<WishlistPage wishlist={wishlist} setStateModal={setStateModal} removeFromWishlist={handleRemoveFromWishlist} />} />
+          <Route path="/checkout" element={<CheckoutPage setCart={setCart} />} />
+          <Route path="/success" element={<SuccessPage />} />
         </Routes>
       </div>
-      <Modal content={stateModal} onClose={() => setStateModal(null)} onAddToCart={handleAddToCart} onAddToWishlist={handleAddToWishlist} />
+      <Modal content={stateModal} onClose={() => setStateModal(null)} onAddToCart={handleAddToCart} onAddToWishlist={handleToggleWishlist} />
     </div>
   );
 }

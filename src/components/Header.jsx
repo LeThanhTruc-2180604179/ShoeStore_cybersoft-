@@ -30,9 +30,12 @@ const Header = ({ cartCount, setStateModal, products, wishlist }) => {
       {/* Logo */}
       <div className="cursor-pointer flex items-center mr-auto" onClick={() => navigate('/')}> 
         {/* Nike SVG logo */}
-        <svg width="48" height="24" viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2 15C12 18 36 18 46 2" stroke="black" strokeWidth="3"/>
-        </svg>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg"
+          alt="Nike Logo"
+          className="h-8 w-auto"
+          style={{ maxWidth: 48, maxHeight: 24 }}
+        />
       </div>
       {/* Search + icons group */}
       <div className="flex items-center gap-4 ml-auto relative">
