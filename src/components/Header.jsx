@@ -1,29 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import useHeader from '../hooks/useHeader';
 
 const Header = ({ cartCount, setStateModal, products, wishlist }) => {
-  const navigate = useNavigate();
-  const [search, setSearch] = useState('');
-  const [showResults, setShowResults] = useState(false);
-  const inputRef = useRef(null);
-  const [results, setResults] = useState([]);
-
-  useEffect(() => {
-    if (search.trim() === '') {
-      setResults([]);
-      return;
-    }
-    const filtered = products.filter((p) =>
-      p.name.toLowerCase().includes(search.toLowerCase())
-    );
-    setResults(filtered);
-  }, [search, products]);
-
-  const handleResultClick = (product) => {
-    setStateModal(product);
-    setSearch('');
-    setResults([]);
-  };
+  const {
+    search,
+    setSearch,
+    showResults,
+    setShowResults,
+    inputRef,
+    results,
+    handleResultClick,
+    navigate,
+  } = useHeader({ setStateModal, products });
 
   return (
     <header className="flex items-center w-full bg-white shadow-md px-6 py-3 sticky top-0 z-30">

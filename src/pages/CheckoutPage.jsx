@@ -1,24 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import useCheckoutPage from '../hooks/useCheckoutPage';
 
-const CheckoutPage = ({ setCart }) => {
-  const [form, setForm] = useState({ name: '', address: '', phone: '' });
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!form.name || !form.address || !form.phone) {
-      setError('Vui lòng nhập đầy đủ thông tin.');
-      return;
-    }
-    setCart([]);
-    navigate('/success');
-  };
+const CheckoutPage = (props) => {
+  const {
+    form,
+    error,
+    handleChange,
+    handleSubmit,
+  } = useCheckoutPage(props);
 
   return (
     <div className="max-w-md mx-auto bg-white p-8 rounded shadow mt-8">

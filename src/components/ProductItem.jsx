@@ -1,18 +1,13 @@
 import React from 'react';
+import useProductItem from '../hooks/useProductItem';
 
-const HeartIcon = () => (
-  <svg width="24" height="24" fill="none" stroke="gray" strokeWidth="2" viewBox="0 0 26 27"><path d="M13 25C13 25 3 16.5 3 10.5C3 6.42 6.42 3 10.5 3C12.24 3 13.91 3.81 15 5.08C16.09 3.81 17.76 3 19.5 3C23.58 3 27 6.42 27 10.5C27 16.5 17 25 17 25H13Z"/></svg>
-);
-const CartIcon = () => (
-  <svg width="18" height="18" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-);
-
-const ProductItem = ({ item, onAddToCart, setStateModal, onAddToWishlist, wishlist }) => {
-  const isWishlisted = wishlist?.some((w) => w.id === item.id);
-
-  const handleCardClick = () => {
-    if (setStateModal) setStateModal(item);
-  };
+const ProductItem = (props) => {
+  const {
+    isWishlisted,
+    handleWishlistClick,
+    handleCartClick,
+    handleCardClick,
+  } = useProductItem(props);
 
   return (
     <div
@@ -21,7 +16,7 @@ const ProductItem = ({ item, onAddToCart, setStateModal, onAddToWishlist, wishli
     >
       <button
         className="absolute top-2 right-2 p-2 border border-black text-black rounded-full flex items-center justify-center bg-white hover:bg-gray-100 transition z-10"
-        onClick={(e) => { e.stopPropagation(); onAddToWishlist(item); }}
+        onClick={handleWishlistClick}
         title={isWishlisted ? 'Đã yêu thích' : 'Thêm vào wishlist'}
       >
         {isWishlisted ? (
@@ -36,25 +31,25 @@ const ProductItem = ({ item, onAddToCart, setStateModal, onAddToWishlist, wishli
       </button>
       <div className="bg-[#f5f5f5] flex items-center justify-center" style={{height: '220px'}}>
         <img
-          src={item.image}
-          alt={item.name}
+          src={props.item.image}
+          alt={props.item.name}
           className="object-contain h-44 w-full"
         />
       </div>
       <div className="p-5 flex flex-col flex-1">
         <span className="text-xs font-bold text-red-600 mb-1">Just In</span>
-        <h3 className="text-base font-bold text-black mb-1 leading-tight line-clamp-2 min-h-[40px]">{item.name}</h3>
+        <h3 className="text-base font-bold text-black mb-1 leading-tight line-clamp-2 min-h-[40px]">{props.item.name}</h3>
         <p className="text-xs text-gray-700 mb-1">Men's Shoes</p>
         <p className="text-xs text-gray-500 mb-1">1 Colour</p>
         <div className="flex items-center gap-2 mt-2 justify-between">
-          <span className="text-base font-bold text-black">{item.price.toLocaleString()}₫</span>
+          <span className="text-base font-bold text-black">{props.item.price.toLocaleString()}₫</span>
           <button
             className="p-2 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition"
-            onClick={(e) => { e.stopPropagation(); onAddToCart(item); }}
+            onClick={handleCartClick}
             title="Add to Bag"
             style={{minWidth: '36px', minHeight: '36px'}}
           >
-            <CartIcon />
+            <svg width="18" height="18" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           </button>
         </div>
       </div>
